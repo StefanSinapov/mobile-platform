@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TestProject.Mobile.MainPage">
+             x:Class="TestProject.Mobile.Views.MainPage">
 
     <ScrollView>
         <VerticalStackLayout
@@ -36,12 +36,34 @@
                 HorizontalOptions="Center"
                 />
 
+
+            <Label
+                x:Name="longLabel"
+                SemanticProperties.HeadingLevel="Level3"
+                SemanticProperties.Description="What is this?"
+                FontSize="Subtitle"
+                HorizontalOptions="Center"
+                />
+
             <Button
                 x:Name="CounterBtn"
                 Text="Click me"
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
+
+            <HorizontalStackLayout>
+                <Label
+                    Text="Turn on long text"
+                    VerticalOptions="Center"
+                    Margin="0,0,5,0"
+                    
+                    />
+                <Switch
+                    Toggled="Switch_Toggled"
+                    VerticalOptions="Center"
+                />
+            </HorizontalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>

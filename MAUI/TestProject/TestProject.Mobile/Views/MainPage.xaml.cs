@@ -1,4 +1,4 @@
-﻿namespace TestProject.Mobile;
+﻿namespace TestProject.Mobile.Views;
 
 public partial class MainPage : ContentPage
 {
@@ -20,5 +20,10 @@ public partial class MainPage : ContentPage
 
 		SemanticScreenReader.Announce(CounterBtn.Text);
 	}
+
+    private void Switch_Toggled(object sender, ToggledEventArgs e)
+    {
+        this.longLabel.Text = e.Value ? "Some long text" : string.Empty;
+    }
 }
 
