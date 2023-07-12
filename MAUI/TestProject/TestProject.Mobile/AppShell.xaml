@@ -22,5 +22,10 @@
             ContentTemplate="{DataTemplate views:AboutPage}"
             Route="AboutPage"
             Icon="{OnPlatform 'icon_about.png', iOS='icon_about_ios.png', MacCatalyst='icon_about_ios.png'}" />
+        <ShellContent
+            Title="Camera"
+            ContentTemplate="{DataTemplate views:CameraPage}"
+            Route="CameraPage"
+           />
     </TabBar>
 </Shell>

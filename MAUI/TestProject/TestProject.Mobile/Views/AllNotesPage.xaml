@@ -23,7 +23,7 @@
                 <StackLayout>
                     <HorizontalStackLayout>
                         <Image Source="{FontImage Glyph='🗒️', Color=White}" />
-                        <Label Text="{Binding Text}" FontSize="Title"/>
+                        <Label Text="{Binding Text}" FontSize="Title" LineBreakMode="TailTruncation"/>
                     </HorizontalStackLayout>
                     <Label Text="{Binding Date}" FontSize="Subtitle" TextColor="Silver"/>
                 </StackLayout>
