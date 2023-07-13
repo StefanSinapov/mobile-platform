@@ -25,7 +25,10 @@
         <ShellContent
             Title="Camera"
             ContentTemplate="{DataTemplate views:CameraPage}"
-            Route="CameraPage"
-           />
+            Route="CameraPage"/>
+        <ShellContent
+            Title="Map"
+            ContentTemplate="{DataTemplate views:MapPage}"
+            Route="MapPage"/>
     </TabBar>
 </Shell>
