@@ -31,5 +31,11 @@
                     Text="Current Location"
                     Clicked="GetCurrentLocationButton_Clicked"/>
         </HorizontalStackLayout>
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Button Text="Open Map app"
+                    Clicked="OpenMapApp"/>
+            <Button Text="Open Map app 2"
+                    Clicked="LauchMapApp"/>
+        </HorizontalStackLayout>
     </StackLayout>
 </ContentPage>

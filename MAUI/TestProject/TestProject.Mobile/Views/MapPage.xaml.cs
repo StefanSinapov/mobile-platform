@@ -9,13 +9,14 @@ public partial class MapPage : ContentPage
 {
     private CancellationTokenSource _cancelTokenSource;
     private bool _isCheckingLocation;
+    private Location _officeLocation = new Location(42.683381890105764, 23.35473960346132);
 
     public MapPage()
     {
         InitializeComponent();
         this.ClearSelectionButton.IsVisible = false;
         BindingContext = new PinItemsSourcePageViewModel();
-        map.MoveToRegion(MapSpan.FromCenterAndRadius(new Location(42.683381890105764, 23.35473960346132), Distance.FromKilometers(10)));
+        map.MoveToRegion(MapSpan.FromCenterAndRadius(_officeLocation, Distance.FromKilometers(10)));
     }
 
 
@@ -106,6 +107,39 @@ public partial class MapPage : ContentPage
         finally
         {
             _isCheckingLocation = false;
+        }
+    }
+
+    private async void LauchMapApp(object sender, EventArgs e)
+    {
+        if (DeviceInfo.Current.Platform == DevicePlatform.iOS || DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
+        {
+            // https://developer.apple.com/library/ios/featuredarticles/iPhoneURLScheme_Reference/MapLinks/MapLinks.html
+            await Launcher.OpenAsync("http://maps.apple.com/?q=394+Pacific+Ave+San+Francisco+CA");
+        }
+        else if (DeviceInfo.Current.Platform == DevicePlatform.Android)
+        {
+            // opens the Maps app directly
+            await Launcher.OpenAsync("geo:0,0?q=394+Pacific+Ave+San+Francisco+CA");
+        }
+        else if (DeviceInfo.Current.Platform == DevicePlatform.WinUI)
+        {
+            await Launcher.OpenAsync("bingmaps:?where=394 Pacific Ave San Francisco CA");
+        }
+    }
+
+    private async void OpenMapApp(object sender, EventArgs e)
+    {
+        var options = new MapLaunchOptions { Name = "Dextrasoft" };
+
+        try
+        {
+            await Microsoft.Maui.ApplicationModel.Map.Default.OpenAsync(_officeLocation, options);
+        }
+        catch (Exception ex)
+        {
+            // No map application available to open
+            Debug.WriteLine("Failed to Open Map: " + ex.Message);
         }
     }
 }
