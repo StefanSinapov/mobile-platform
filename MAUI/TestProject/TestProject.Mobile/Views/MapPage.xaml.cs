@@ -77,7 +77,7 @@ public partial class MapPage : ContentPage
         {
             _isCheckingLocation = true;
 
-            GeolocationRequest request = new(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+            GeolocationRequest request = new(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
 
             _cancelTokenSource = new CancellationTokenSource();
 

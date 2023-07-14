@@ -29,7 +29,7 @@
                 HorizontalOptions="Center" />
 
             <Label
-                Text="Can I add something here quickly"
+                Text="Can I add something here quickly asdf"
                 SemanticProperties.HeadingLevel="Level3"
                 SemanticProperties.Description="What is this?"
                 FontSize="Subtitle"
