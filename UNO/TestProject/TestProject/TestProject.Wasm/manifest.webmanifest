@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "TestProject",
+  "display": "standalone",
+  "name": "TestProject",
+  "short_name": "TestProject",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}
