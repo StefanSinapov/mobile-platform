@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Button, Image, TouchableOpacity } from 'react-native';
 import { useRef, useState } from 'react';
 
 import { Camera, CameraType } from 'expo-camera';

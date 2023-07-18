@@ -1,9 +1,9 @@
 ﻿import MapView, { LatLng, LongPressEvent, Marker } from 'react-native-maps';
 import { ScrollView, Text, View } from '../../components/Themed';
-import { useEffect, useRef, useState } from 'react';
-import { TouchableOpacity, StyleSheet, Dimensions, Button, Alert } from 'react-native';
+import { useRef, useState } from 'react';
+import { StyleSheet, Dimensions, Button, Alert } from 'react-native';
 
-import * as Location from 'expo-location';
+import { LocationObject, requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
 
 type MarkerType = {
     latlng: LatLng;
@@ -27,15 +27,15 @@ export default function MapScreen() {
         longitudeDelta: 0.0922 * ASPECT_RATIO,
     });
 
-    const [userLocation, setUserLocation] = useState<Location.LocationObject | null>(null);
+    const [userLocation, setUserLocation] = useState<LocationObject | null>(null);
     const getCurrentLocation = async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
+        let { status } = await requestForegroundPermissionsAsync();
         if (status !== 'granted') {
             Alert.alert('Permission to access location was denied');
             return;
         }
 
-        let location = await Location.getCurrentPositionAsync({});
+        let location = await getCurrentPositionAsync({});
         setUserLocation(location);
         setShowCurrentLocation(true);
         mapRef.current?.animateToRegion({ latitude: location.coords.latitude, longitude: location.coords.longitude, latitudeDelta: 0.01, longitudeDelta: 0.01 * ASPECT_RATIO });
