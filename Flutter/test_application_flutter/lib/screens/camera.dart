@@ -15,7 +15,7 @@ class _CameraPageState extends State<CameraPage> {
   String imagePath = '';
 
   Future<void> pickImageFromGallery() async {
-    print('Pick Image from Gallery');
+    debugPrint('Pick Image from Gallery');
     try {
       final pickedFile =
           await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -25,7 +25,7 @@ class _CameraPageState extends State<CameraPage> {
         });
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -138,12 +138,7 @@ class _CameraState extends State<Camera> {
     try {
       await _controller.setFlashMode(FlashMode.off);
       XFile picture = await _controller.takePicture();
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => PreviewPage(
-      //               picture: picture,
-      //             )));
+      if (!mounted) return;
       Navigator.pop(context, picture);
     } on CameraException catch (e) {
       debugPrint('Error occured while taking picture: $e');

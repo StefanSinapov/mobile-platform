@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           initialRoute: homeRoute,
           routes: {
             homeRoute: (context) =>
-                const MyHomePage(title: 'Flutter Demo Home Page'),
+                const MyHomePage(title: 'Flutter Demo'),
             otherRoute: (context) => const OtherScreen(),
           }),
     );

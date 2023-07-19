@@ -1,7 +1,8 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:test_application_flutter/constants.dart';
 import 'package:test_application_flutter/screens/camera.dart';
 import 'package:test_application_flutter/screens/favorites.dart';
+import 'package:test_application_flutter/screens/map.dart';
+import 'package:test_application_flutter/screens/settings.dart';
 
 import 'generator.dart';
 
@@ -41,10 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
         page = const CameraPage();
         break;
       case 3:
-        page = const Placeholder();
+        page = const MapPage();
         break;
       case 4:
-        page = const Placeholder();
+        page = const SettingsPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
