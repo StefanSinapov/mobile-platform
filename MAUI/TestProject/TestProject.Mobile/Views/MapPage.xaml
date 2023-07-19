@@ -5,17 +5,16 @@
              x:Class="TestProject.Mobile.Views.MapPage"
              Title="MapPage">
     <StackLayout Margin="10">
-        <maps:Map x:Name="map" 
+        <VerticalStackLayout>
+            <Label Text="Click to add pin"/>
+        </VerticalStackLayout>
+        <maps:Map x:Name="map"
                   MapClicked="OnMapClicked">
         </maps:Map>
-        <Slider Margin="20,0,20,0"
-                Maximum="18"
-                Minimum="1"
-                Value="12"
-                ValueChanged="OnSliderValueChanged" />
         <StackLayout Orientation="Horizontal"
                      HorizontalOptions="Center"
-                     Spacing="30">
+                     Spacing="30"
+                     Margin="10">
             <Button Text="Street"
                     Clicked="OnButtonClicked" />
             <Button Text="Satellite"
@@ -23,19 +22,14 @@
             <Button Text="Hybrid"
                     Clicked="OnButtonClicked" />
         </StackLayout>
-        <HorizontalStackLayout HorizontalOptions="Center">
-            <Button x:Name="ClearSelectionButton"
-                    Text="Clear"
-                    Clicked="ClearSelectionButtonClicked"/>
+        <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
+            <Button Text="Go to office"
+                    Clicked="OnGoToOffice"/>
             <Button x:Name="GetCurrentLocationButton"
                     Text="Current Location"
                     Clicked="GetCurrentLocationButton_Clicked"/>
-        </HorizontalStackLayout>
-        <HorizontalStackLayout HorizontalOptions="Center">
             <Button Text="Open Map app"
                     Clicked="OpenMapApp"/>
-            <Button Text="Open Map app 2"
-                    Clicked="LauchMapApp"/>
-        </HorizontalStackLayout>
+        </VerticalStackLayout>
     </StackLayout>
 </ContentPage>
