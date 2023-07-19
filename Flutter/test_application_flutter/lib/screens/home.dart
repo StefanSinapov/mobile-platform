@@ -1,9 +1,8 @@
-﻿import 'package:english_words/english_words.dart';
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:test_application_flutter/constants.dart';
+import 'package:test_application_flutter/screens/camera.dart';
 import 'package:test_application_flutter/screens/favorites.dart';
 
-import '../widgets/big_card.dart';
 import 'generator.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -38,6 +37,15 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         page = const FavoritesPage();
         break;
+      case 2:
+        page = const CameraPage();
+        break;
+      case 3:
+        page = const Placeholder();
+        break;
+      case 4:
+        page = const Placeholder();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -66,17 +74,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, otherRoute);
-              },
-              icon: const Icon(Icons.arrow_forward),
-            ),
-          ],
         ),
         body: LayoutBuilder(builder: (context, constraints) {
-          if (constraints.maxWidth <= 500) {
+          if (constraints.maxWidth <= 600) {
             // Use a more mobile-friendly layout with BottomNavigationBar
             // on narrow screens.
             return Column(
@@ -84,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(child: mainArea),
                 SafeArea(
                   child: BottomNavigationBar(
+                    type: BottomNavigationBarType.fixed,
                     items: const [
                       BottomNavigationBarItem(
                         icon: Icon(Icons.home),
@@ -93,6 +94,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(Icons.favorite),
                         label: 'Favorites',
                       ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.camera),
+                        label: 'Camera',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.map),
+                        label: 'Map',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.settings),
+                        label: 'Settings',
+                      )
                     ],
                     currentIndex: selectedIndex,
                     onTap: (value) {
@@ -118,6 +131,18 @@ class _MyHomePageState extends State<MyHomePage> {
                       NavigationRailDestination(
                         icon: Icon(Icons.favorite),
                         label: Text('Favorites'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.camera),
+                        label: Text('Camera'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.map),
+                        label: Text('Map'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.settings),
+                        label: Text('Settings'),
                       ),
                     ],
                     selectedIndex: selectedIndex,
