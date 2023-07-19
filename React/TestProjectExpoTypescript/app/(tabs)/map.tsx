@@ -80,7 +80,7 @@ export default function MapScreen() {
             </MapView>
             <View style={styles.latlng}>
                 <Text>
-                    {region.latitude.toPrecision(7)},{region.longitude.toPrecision(7)}
+                    current view location: {region.latitude.toPrecision(7)},{region.longitude.toPrecision(7)}
                 </Text>
             </View>
             {userLocation && (

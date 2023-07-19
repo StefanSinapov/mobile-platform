@@ -22,16 +22,6 @@ export default function CameraScreen() {
             </Text>
             <Text>Device type: {Device.deviceType}</Text>
             <Text>OS build ID: {Device.osBuildId}</Text>
-
-            <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: "center" }}>
-                <Text>Dark mode: {Appearance.getColorScheme()}</Text>
-                <Switch
-                    value={darkMode}
-                    onValueChange={(value) => {
-                        setDarkMode(value);
-                    }}
-                />
-            </View>
         </View>
     );
 }
