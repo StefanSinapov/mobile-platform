@@ -10,20 +10,22 @@ public partial class CameraPage : ContentPage
     private async void TakePhotoButton_Clicked(object sender, EventArgs e)
     {
         var permission = await Permissions.CheckStatusAsync<Permissions.Camera>();
-        if (permission != PermissionStatus.Granted)
+        if (permission == PermissionStatus.Denied)
         {
             await Shell.Current.DisplayAlert("Permissions Denied", "Unable to take photos.", "OK");
+            return;
         }
 
-        if (!MediaPicker.Default.IsCaptureSupported)
-        {
-            await Shell.Current.DisplayAlert("Error", "Taking photos is not supported on this device", "OK");
-        }
-        else
+        try
         {
             FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
 
             SetPhoto(photo);
+        }
+        catch (Exception)
+        {
+            await Shell.Current.DisplayAlert("Error", "Taking photos is not supported on this device", "OK");
+            throw;
         }
     }
 
@@ -38,12 +40,13 @@ public partial class CameraPage : ContentPage
         permission = await Permissions.CheckStatusAsync<Permissions.Media>();
 #endif
 
-        if (permission != PermissionStatus.Granted)
+        if (permission == PermissionStatus.Denied)
         {
             await Shell.Current.DisplayAlert("Permissions Denied", "Unable to take photos.", "OK");
+            return;
         }
 
-        if (MediaPicker.Default.IsCaptureSupported)
+        try
         {
             var photo = await MediaPicker.Default.PickPhotoAsync(new MediaPickerOptions
             {
@@ -52,9 +55,10 @@ public partial class CameraPage : ContentPage
 
             this.SetPhoto(photo);
         }
-        else
+        catch (Exception)
         {
-            await Shell.Current.DisplayAlert("Error", "Taking photos is not suported on this device", "OK");
+            await Shell.Current.DisplayAlert("Error", "Taking photos is not supported on this device", "OK");
+            throw;
         }
     }
 

@@ -62,13 +62,22 @@ public partial class MapPage : ContentPage
 
     private async void GetCurrentLocationButton_Clicked(object sender, EventArgs e)
     {
+        if (LoadingCurrentLocation.IsRunning)
+        {
+            return;
+        }
+
         try
         {
-            GeolocationRequest request = new(GeolocationAccuracy.Best, TimeSpan.FromSeconds(10));
+            LoadingCurrentLocation.IsRunning = true;
+
+            GeolocationRequest request = new(GeolocationAccuracy.Best, TimeSpan.FromSeconds(20));
 
             _cancelTokenSource = new CancellationTokenSource();
 
             Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
+
+            LoadingCurrentLocation.IsRunning = false;
 
             if (location != null)
             {

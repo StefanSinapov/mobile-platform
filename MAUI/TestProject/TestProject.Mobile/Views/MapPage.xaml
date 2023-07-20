@@ -25,9 +25,12 @@
         <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
             <Button Text="Go to office"
                     Clicked="OnGoToOffice"/>
-            <Button x:Name="GetCurrentLocationButton"
+            <HorizontalStackLayout Spacing="10">
+                <Button x:Name="GetCurrentLocationButton"
                     Text="Current Location"
                     Clicked="GetCurrentLocationButton_Clicked"/>
+                <ActivityIndicator x:Name="LoadingCurrentLocation"></ActivityIndicator>
+            </HorizontalStackLayout>
             <Button Text="Open Map app"
                     Clicked="OpenMapApp"/>
         </VerticalStackLayout>
