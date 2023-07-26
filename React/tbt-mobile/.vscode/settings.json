@@ -1,0 +1,11 @@
+{
+    "files.exclude": {
+        "**/.expo": true,
+        "**/%ProgramData%": true,
+        "**/coverage": true
+    },
+    "explorer.excludeGitIgnore": false,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
+}
