@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useIsFirstTime } from '@/core/hooks';
 import { Button, SafeAreaView, Text, View } from '@/ui';
@@ -6,6 +6,13 @@ import { Button, SafeAreaView, Text, View } from '@/ui';
 import { Cover } from './cover';
 export const Onboarding = () => {
   const [_, setIsFirstTime] = useIsFirstTime();
+
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    setCount(count + 1);
+  });
+
   return (
     <View className="flex h-full items-center  justify-center">
       <View className="w-full flex-1">

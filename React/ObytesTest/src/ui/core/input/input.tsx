@@ -1,5 +1,5 @@
 import { styled, useColorScheme } from 'nativewind';
-import * as React from 'react';
+import React, { forwardRef } from 'react';
 import type { TextInput, TextInputProps } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { TextInput as NTextInput } from 'react-native';
@@ -18,7 +18,7 @@ export interface NInputProps extends TextInputProps {
   error?: string;
 }
 
-export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
+export const Input = forwardRef<TextInput, NInputProps>((props, ref) => {
   const { label, error, ...inputProps } = props;
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
