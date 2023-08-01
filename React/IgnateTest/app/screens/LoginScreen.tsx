@@ -26,12 +26,6 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     setAuthPassword("ign1teIsAwes0m3")
   }, [])
 
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    setCount(count + 1);
-  });
-
   const error = isSubmitted ? validationError : ""
 
   function login() {
