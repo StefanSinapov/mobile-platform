@@ -2,6 +2,7 @@
   "expo": {
     "name": "ds-react-native-template",
     "slug": "ds-react-native-template",
+    "scheme": "ds-react-native-template",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,11 +25,16 @@
       }
     },
     "web": {
+      "bundler": "metro",
+      "output": "static",
       "favicon": "./assets/favicon.png"
     },
     "experiments": {
       "tsconfigPaths": true,
       "typedRoutes": true
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
