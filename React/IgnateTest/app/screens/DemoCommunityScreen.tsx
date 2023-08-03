@@ -15,6 +15,7 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
   function DemoCommunityScreen(_props) {
     return (
       <Screen preset="scroll" contentContainerStyle={$container} safeAreaEdges={["top"]}>
+        <Text preset="heading" style={$title}> asdf asdf asd</Text>
         <Text preset="heading" tx="demoCommunityScreen.title" style={$title} />
         <Text tx="demoCommunityScreen.tagLine" style={$tagline} />
 

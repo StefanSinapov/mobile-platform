@@ -1,11 +1,18 @@
 ﻿import React from 'react';
 
-import { Text, ScrollView } from '@/components/Themed';
+import { Text, View } from '@/components/Themed';
+import { useAuthStore } from '@/core/auth';
+import { Button } from 'react-native';
 
 export default function SettingsView() {
+  var authStatus = useAuthStore(state => state.status);
+  var logout = useAuthStore(state => state.logout);
+
   return (
-    <ScrollView>
+    <View>
       <Text>SettingsView</Text>
-    </ScrollView>
+      <Text>Auth status: {authStatus}</Text>
+      <Button title="Logout" onPress={() => logout()} />
+    </View>
   );
 }

@@ -1,11 +1,11 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import { SplashScreen, Stack, router, useSegments } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
 import Providers from '@/Providers';
+import { useAuthStore } from '@/core/auth';
+import { useAppReady, useRouterReady } from '@/utils/init';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -21,10 +21,7 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    ...FontAwesome.font,
-  });
+  const [loaded, error] = useAppReady();
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
@@ -39,25 +36,54 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  useRouteProtection();
+
+  console.log('loaded', loaded);
+
   if (!loaded) {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <Providers>
+      <RootLayoutNav />
+      {/* <StatusBar style="auto" /> */}
+    </Providers>
+  );
 }
 
 function RootLayoutNav() {
+  // const screenOptions = useDefaultStackScreenOptions();
   const colorScheme = useColorScheme();
-
   return (
-    <Providers>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack initialRouteName="(tabs)/home">
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        </Stack>
-      </ThemeProvider>
-    </Providers>
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <Stack screenOptions={{ headerShown: false }} initialRouteName="(tabs)/home">
+        {/* <Stack.Screen name="index" /> */}
+        <Stack.Screen name="(tabs)" />
+        {/* <Stack.Screen name="(auth)" /> */}
+        <Stack.Screen name="modal" options={{ presentation: 'modal', headerShown: true }} />
+      </Stack>
+    </ThemeProvider>
   );
+}
+
+function useRouteProtection() {
+  const segments = useSegments();
+  const authStatus = useAuthStore(s => s.status);
+  const notInAuthRoute = segments[0] !== '(auth)';
+  const isNavigationReady = useRouterReady();
+  console.log('useRouteProtection', authStatus, notInAuthRoute, isNavigationReady);
+  useEffect(() => {
+    if (!isNavigationReady) {
+      return;
+    }
+
+    if (authStatus === 'unauthenticated' && notInAuthRoute) {
+      console.log('/(auth)/landing');
+      router.replace('/(auth)/landing');
+    } else if (authStatus === 'authenticated') {
+      console.log('/(tabs)/home');
+      router.push('/(tabs)/home');
+    }
+  }, [isNavigationReady, authStatus, notInAuthRoute]);
 }
