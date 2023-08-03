@@ -1,17 +1,16 @@
-import { Pressable, StyleSheet, useColorScheme } from 'react-native';
+import { Button, Pressable, StyleSheet, useColorScheme } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
-import { Link, Tabs } from 'expo-router';
+import { Link, Tabs, router } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import Colors from '@/constants/Colors';
 
 export default function TabOneScreen() {
   const colorScheme = useColorScheme();
   return (
     <View style={styles.container}>
-      {/* <Tabs.Screen
-        name="index"
+      <Tabs.Screen
         options={{
           title: 'Home',
           headerRight: () => (
@@ -29,10 +28,11 @@ export default function TabOneScreen() {
             </Link>
           ),
         }}
-      /> */}
+      />
       <Text style={styles.title}>Home</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <Button title="Modal" onPress={() => router.push('/modal')} />
     </View>
   );
 }

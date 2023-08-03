@@ -38,8 +38,6 @@ export default function RootLayout() {
 
   useRouteProtection();
 
-  console.log('loaded', loaded);
-
   if (!loaded) {
     return null;
   }
@@ -72,7 +70,6 @@ function useRouteProtection() {
   const authStatus = useAuthStore(s => s.status);
   const notInAuthRoute = segments[0] !== '(auth)';
   const isNavigationReady = useRouterReady();
-  console.log('useRouteProtection', authStatus, notInAuthRoute, isNavigationReady);
   useEffect(() => {
     if (!isNavigationReady) {
       return;

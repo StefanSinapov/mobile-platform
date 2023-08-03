@@ -2,7 +2,6 @@
 import React from 'react';
 
 export default function Root() {
-  console.log('Root');
   return (
     <>
       <View>
