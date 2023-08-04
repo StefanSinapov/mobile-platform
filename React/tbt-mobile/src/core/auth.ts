@@ -1,5 +1,9 @@
 ﻿import { Alert } from 'react-native';
 import { create } from 'zustand';
+import * as storage from '@/utils/storage';
+
+
+const TOKENS_STORAGE_KEY = '@app/access-token/v1';
 
 type AuthStatus =
   | 'undetermined'
@@ -45,7 +49,7 @@ const authStore = create<AuthState>(set => ({
 
     try {
       const tokens = await fakeSignup(credentials);
-      // persistAuthTokens(tokens);
+      await persistAuthTokens(tokens);
       set({ tokens, status: 'authenticated' });
     } catch (error) {
       set({ status: 'unauthenticated' });
@@ -55,9 +59,10 @@ const authStore = create<AuthState>(set => ({
   login: async credentials => {
     set({ status: 'logging-in' });
 
+    console.log('logging-in');
     try {
       const tokens = await fakeLogin(credentials);
-      // persistAuthTokens(tokens);
+      await persistAuthTokens(tokens);
       set({ tokens, status: 'authenticated' });
     } catch (error) {
       set({ status: 'unauthenticated' });
@@ -73,31 +78,17 @@ const authStore = create<AuthState>(set => ({
     }
 
     // TODO: clear API client cache
-    // TODO: clear storage
-    // storage.clearAll();
+    await storage.remove(TOKENS_STORAGE_KEY);
   },
 }));
 
 export const useAuthStore = authStore;
 
-// function persistAuthTokens({
-//   accessToken,
-//   refreshToken,
-// }: {
-//   accessToken: string;
-//   refreshToken: string;
-// }) {
-//   storage.clearAll();
-//   storage.set('@app/access-token', accessToken);
-//   storage.set('@app/refresh-token', refreshToken);
-// }
-
 export async function initAuth() {
   authStore.setState({ status: 'determining' });
 
   try {
-    // const accessToken = storage.getString('@app/access-token');
-    const accessToken = null;
+    const accessToken = await storage.load(TOKENS_STORAGE_KEY) as AuthTokens;
 
     if (!accessToken) {
       throw Error('No access token!');
@@ -131,6 +122,11 @@ export function isAuthError(error: any) {
   return fakeIsAuthError(error);
 }
 
+async function persistAuthTokens(tokens: AuthTokens) {
+  return await storage.save(TOKENS_STORAGE_KEY, tokens);
+}
+
+
 // Mock login functions --------------------------------------------------------
 
 function fakeLogin(
@@ -160,3 +156,4 @@ function fakeCheckAuth() {
 function fakeIsAuthError(error: any) {
   return [401, 403].includes(error?.errorCode);
 }
+

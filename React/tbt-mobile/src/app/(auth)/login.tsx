@@ -10,7 +10,10 @@ export default function LoginView() {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Stack.Screen options={{ title: 'Login', headerShown: true }} />
       <Text>LoginView</Text>
-      <Button title="Login" onPress={() => login({ email: 'some@email.com', password: '123' })} />
+      <Button
+        title="Login"
+        onPress={async () => await login({ email: 'some@email.com', password: '123' })}
+      />
     </View>
   );
 }
