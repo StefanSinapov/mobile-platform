@@ -156,4 +156,3 @@ function fakeCheckAuth() {
 function fakeIsAuthError(error: any) {
   return [401, 403].includes(error?.errorCode);
 }
-
