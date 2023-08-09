@@ -5,6 +5,7 @@ import { Text, View } from '@/components/Themed';
 import { Link, Tabs, router } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
+import { translate } from '@/core';
 
 export default function TabOneScreen() {
   const colorScheme = useColorScheme();
@@ -12,7 +13,7 @@ export default function TabOneScreen() {
     <View style={styles.container}>
       <Tabs.Screen
         options={{
-          title: 'Home',
+          title: translate('home.title'),
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>

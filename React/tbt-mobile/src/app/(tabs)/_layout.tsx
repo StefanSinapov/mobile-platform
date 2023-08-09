@@ -3,6 +3,7 @@ import { Tabs } from 'expo-router';
 import { useColorScheme } from 'react-native';
 
 import Colors from '@/constants/Colors';
+import { translate } from '@/core';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -27,27 +28,27 @@ export default function TabsLayout() {
   const tabs: TabList = [
     {
       id: 'home',
-      title: 'Home',
-      iconFilled: 'home-filled',
+      title: translate('home.title'),
+      iconFilled: 'home',
       iconOutlined: 'home',
     },
     {
       id: 'search',
-      title: 'Search',
+      title: translate('search.title'),
       iconFilled: 'search',
       iconOutlined: 'search',
     },
 
     {
       id: 'profile',
-      title: 'Profile',
+      title: translate('profile.title'),
       iconFilled: 'person',
       iconOutlined: 'person',
     },
 
     {
       id: 'settings',
-      title: 'Settings',
+      title: translate('settings.title'),
       iconFilled: 'settings',
       iconOutlined: 'settings',
     },
@@ -57,6 +58,7 @@ export default function TabsLayout() {
     <Tabs
       initialRouteName="home"
       screenOptions={{
+        // TODO: defaultHeaderOptions
         // ...defaultHeaderOptions,
         // tabBarStyle: {
         //   backgroundColor: theme.colors.background,

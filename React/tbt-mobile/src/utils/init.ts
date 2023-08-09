@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { useRootNavigation } from 'expo-router';
 import { useEffect, useState } from 'react';
 
-import { initAuth } from '@/core/auth';
+import { initAuth, initI18n } from '@/core';
 
 export function useAppReady(): [boolean, Error | null] {
   const [initReady, initError] = useInitReady();
@@ -24,7 +24,7 @@ function useInitReady(): [boolean, Error | null] {
   useEffect(() => {
     async function init() {
       try {
-        // await initTranslations();
+        await initI18n();
         await initAuth();
         setInitReady(true);
       } catch (error) {
