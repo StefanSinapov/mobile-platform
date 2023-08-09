@@ -1,7 +1,7 @@
 ﻿import { Alert } from 'react-native';
 import { create } from 'zustand';
-import * as storage from '@/utils/storage';
 
+import * as storage from '@/utils/storage';
 
 const TOKENS_STORAGE_KEY = '@app/access-token/v1';
 
@@ -88,7 +88,7 @@ export async function initAuth() {
   authStore.setState({ status: 'determining' });
 
   try {
-    const accessToken = await storage.load(TOKENS_STORAGE_KEY) as AuthTokens;
+    const accessToken = (await storage.load(TOKENS_STORAGE_KEY)) as AuthTokens;
 
     if (!accessToken) {
       throw Error('No access token!');
@@ -108,7 +108,7 @@ export async function initAuth() {
     } else if (error?.networkError) {
       Alert.alert(
         'Could not connect to server',
-        'Please check your internet connection and try again.'
+        'Please check your internet connection and try again.',
       ); // TODO: i18n
     } else {
       console.log('> Unknown auth error', error);
@@ -126,14 +126,13 @@ async function persistAuthTokens(tokens: AuthTokens) {
   return await storage.save(TOKENS_STORAGE_KEY, tokens);
 }
 
-
 // Mock login functions --------------------------------------------------------
 
 function fakeLogin(
-  _credentials: LoginCredentials
+  _credentials: LoginCredentials,
 ): Promise<{ accessToken: string; refreshToken: string }> {
   return new Promise(resolve =>
-    setTimeout(() => resolve({ accessToken: '1234', refreshToken: '1234' }), 1000)
+    setTimeout(() => resolve({ accessToken: '1234', refreshToken: '1234' }), 1000),
   );
 }
 
@@ -142,10 +141,10 @@ function fakeLogout(): Promise<{ ok: boolean }> {
 }
 
 function fakeSignup(
-  _credentials: RegisterCredentials
+  _credentials: RegisterCredentials,
 ): Promise<{ accessToken: string; refreshToken: string }> {
   return new Promise(resolve =>
-    setTimeout(() => resolve({ accessToken: '1234', refreshToken: '1234' }), 1000)
+    setTimeout(() => resolve({ accessToken: '1234', refreshToken: '1234' }), 1000),
   );
 }
 

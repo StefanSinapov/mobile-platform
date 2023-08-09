@@ -12,7 +12,7 @@ export function useAppReady(): [boolean, Error | null] {
     ...MaterialIcons.font,
   });
   const appReady = initReady && fontsLoaded;
-  const error = initError || fontsError;
+  const error = initError ?? fontsError;
 
   return [appReady, error];
 }

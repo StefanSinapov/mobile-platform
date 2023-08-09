@@ -1,14 +1,14 @@
 ﻿import React from 'react';
+import { Button } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
-import { useAuthStore } from '@/core/auth';
-import { Button } from 'react-native';
 import { useI18n } from '@/core';
+import { useAuthStore } from '@/core/auth';
 
 export default function SettingsView() {
-  var authStatus = useAuthStore(state => state.status);
-  var logout = useAuthStore(state => state.logout);
-  var [locale, setLocale] = useI18n();
+  const authStatus = useAuthStore(state => state.status);
+  const logout = useAuthStore(state => state.logout);
+  const [locale, setLocale] = useI18n();
 
   return (
     <View>

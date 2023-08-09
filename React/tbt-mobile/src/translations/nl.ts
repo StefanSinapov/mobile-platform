@@ -1,4 +1,4 @@
-﻿import { Keywords } from "./en";
+﻿import type { Keywords } from './en';
 
 const nl: Partial<Keywords> = {
   home: {
@@ -13,6 +13,6 @@ const nl: Partial<Keywords> = {
   settings: {
     title: 'Instellingen',
   },
-}
+};
 
 export default nl;

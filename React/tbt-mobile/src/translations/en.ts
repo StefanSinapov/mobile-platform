@@ -11,7 +11,7 @@
   settings: {
     title: 'Settings',
   },
-}
+};
 
 export default en;
 export type Keywords = typeof en;

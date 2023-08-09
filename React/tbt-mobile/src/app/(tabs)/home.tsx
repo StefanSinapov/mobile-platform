@@ -1,9 +1,10 @@
+import { MaterialIcons } from '@expo/vector-icons';
+import { Link, Tabs, router } from 'expo-router';
+import type { ColorSchemeName } from 'react-native';
 import { Button, Pressable, StyleSheet, useColorScheme } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
-import { Link, Tabs, router } from 'expo-router';
-import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { translate } from '@/core';
 
@@ -14,20 +15,7 @@ export default function TabOneScreen() {
       <Tabs.Screen
         options={{
           title: translate('home.title'),
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <MaterialIcons
-                    name="info"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          headerRight: () => newFunction(colorScheme),
         }}
       />
       <Text style={styles.title}>Home</Text>
@@ -54,3 +42,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+function newFunction(colorScheme: ColorSchemeName) {
+  return (
+    <Link href="/modal" asChild>
+      <Pressable>
+        {({ pressed }) => (
+          <MaterialIcons
+            name="info"
+            size={25}
+            color={Colors[colorScheme ?? 'light'].text}
+            style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+          />
+        )}
+      </Pressable>
+    </Link>
+  );
+}

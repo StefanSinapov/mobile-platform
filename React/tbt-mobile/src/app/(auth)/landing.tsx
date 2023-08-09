@@ -1,8 +1,8 @@
+import { router } from 'expo-router';
 import React from 'react';
+import { Button } from 'react-native';
 
 import { View, Text } from '@/components/Themed';
-import { Button } from 'react-native';
-import { Stack, router } from 'expo-router';
 
 export default function LandingScreen() {
   return (

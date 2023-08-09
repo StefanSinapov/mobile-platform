@@ -1,5 +1,6 @@
-﻿import { Text, View } from '@/components/Themed';
-import React from 'react';
+﻿import React from 'react';
+
+import { Text, View } from '@/components/Themed';
 
 export default function Root() {
   return (

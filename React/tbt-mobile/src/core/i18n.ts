@@ -4,9 +4,11 @@ import type TranslateOptions from 'i18next';
 import { useCallback, useState } from 'react';
 import { initReactI18next } from 'react-i18next';
 // import { I18nManager } from 'react-native';
-import * as storage from '@/utils/storage';
-import en, { Keywords } from '@/translations/en';
+
+import type { Keywords } from '@/translations/en';
+import en from '@/translations/en';
 import nl from '@/translations/nl';
+import * as storage from '@/utils/storage';
 
 const LOCALE_STORAGE_KEY = '@app/locale_v1';
 
@@ -16,7 +18,7 @@ export const resources = {
   },
   nl: {
     translation: nl,
-  }
+  },
 };
 
 export type Language = keyof typeof resources;
@@ -37,33 +39,33 @@ export async function initI18n() {
   });
 }
 
-
 // Is it a RTL language?
 // export const isRTL: boolean = i18n.dir() === 'rtl';
 
 // I18nManager.allowRTL(isRTL);
 // I18nManager.forceRTL(isRTL);
 
-
 export function useI18n(): [string, (language: Language) => void] {
-  const [locale, setLocaleInternal] = useState(i18n.language)
+  const [internalLocale, setLocaleInternal] = useState(i18n.language);
 
-  const setLocale = useCallback((language: Language) => {
-    i18n.changeLanguage(language);
-    setPersistedLocale(language);
-    setLocaleInternal(language);
-  }, [setLocaleInternal])
+  const setLocale = useCallback(
+    (language: Language) => {
+      i18n.changeLanguage(language);
+      setPersistedLocale(language);
+      setLocaleInternal(language);
+    },
+    [setLocaleInternal],
+  );
 
-
-  return [locale, setLocale];
+  return [internalLocale, setLocale];
 }
 
 async function getPersistedLocale() {
-  return await storage.loadString(LOCALE_STORAGE_KEY) as Language;
+  return (await storage.loadString(LOCALE_STORAGE_KEY)) as Language;
 }
 
-async function setPersistedLocale(locale: string) {
-  await storage.saveString(LOCALE_STORAGE_KEY, locale);
+async function setPersistedLocale(l: string) {
+  await storage.saveString(LOCALE_STORAGE_KEY, l);
 }
 
 export type TxKeyPath = DeepLeafKeys<Keywords>;
@@ -73,13 +75,15 @@ export function translate(key: TxKeyPath, options?: typeof TranslateOptions): st
 
 // https://stackoverflow.com/questions/58277973/how-to-type-check-i18n-dictionaries-with-typescript
 // get all possible key paths
-type DeepKeys<T> = T extends object ? {
-  [K in keyof T]-?: `${K & string}` | Concat<K & string, DeepKeys<T[K]>>
-}[keyof T] : ""
+type DeepKeys<T> = T extends object
+  ? {
+      [K in keyof T]-?: `${K & string}` | Concat<K & string, DeepKeys<T[K]>>;
+    }[keyof T]
+  : '';
 
 // or: only get leaf and no intermediate key path
-type DeepLeafKeys<T> = T extends object ?
-  { [K in keyof T]-?: Concat<K & string, DeepKeys<T[K]>> }[keyof T] : "";
+type DeepLeafKeys<T> = T extends object
+  ? { [K in keyof T]-?: Concat<K & string, DeepKeys<T[K]>> }[keyof T]
+  : '';
 
-type Concat<K extends string, P extends string> =
-  `${K}${"" extends P ? "" : "."}${P}`
+type Concat<K extends string, P extends string> = `${K}${'' extends P ? '' : '.'}${P}`;

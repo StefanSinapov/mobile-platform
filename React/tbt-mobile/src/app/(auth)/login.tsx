@@ -1,7 +1,8 @@
-import { Text, ScrollView, View } from '@/components/Themed';
-import { useAuthStore } from '@/core/auth';
 import { Stack } from 'expo-router';
 import { Button } from 'react-native';
+
+import { Text, View } from '@/components/Themed';
+import { useAuthStore } from '@/core/auth';
 
 export default function LoginView() {
   const login = useAuthStore(state => state.login);
