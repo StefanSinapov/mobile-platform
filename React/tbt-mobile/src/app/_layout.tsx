@@ -1,7 +1,5 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { SplashScreen, Stack, router, useSegments } from 'expo-router';
+import { SplashScreen, Stack, router, useSegments, usePathname } from 'expo-router';
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
 
 import Providers from '@/Providers';
 import { useAuthStore } from '@/core/auth';
@@ -32,7 +30,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      setTimeout(() => SplashScreen.hideAsync(), 500);
+      setTimeout(() => SplashScreen.hideAsync(), 300);
     }
   }, [loaded]);
 
@@ -51,26 +49,26 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  // const screenOptions = useDefaultStackScreenOptions();
-  const colorScheme = useColorScheme();
+  // const screenOptions = useDefaultStackScreenOptions(); TODO: implement
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }} initialRouteName="(tabs)/home">
-        {/* <Stack.Screen name="index" /> */}
-        <Stack.Screen name="(tabs)" />
-        {/* <Stack.Screen name="(auth)" /> */}
-        <Stack.Screen name="modal" options={{ presentation: 'modal', headerShown: true }} />
-      </Stack>
-    </ThemeProvider>
+    <Stack screenOptions={{ headerShown: false }} initialRouteName="(tabs)">
+      {/* <Stack.Screen name="index" /> */}
+      <Stack.Screen name="(tabs)" />
+      {/* <Stack.Screen name="(auth)" /> */}
+      <Stack.Screen name="modal" options={{ presentation: 'modal', headerShown: true }} />
+    </Stack>
   );
 }
 
 function useRouteProtection() {
+  const pathName = usePathname();
   const segments = useSegments();
   const authStatus = useAuthStore(s => s.status);
   const notInAuthRoute = segments[0] !== '(auth)';
   const isNavigationReady = useRouterReady();
+  const isRoot = pathName === '/';
   useEffect(() => {
+    console.info('runEffect');
     if (!isNavigationReady) {
       return;
     }
@@ -78,9 +76,9 @@ function useRouteProtection() {
     if (authStatus === 'unauthenticated' && notInAuthRoute) {
       console.log('/(auth)/landing');
       router.replace('/(auth)/landing');
-    } else if (authStatus === 'authenticated') {
+    } else if (authStatus === 'authenticated' && (!notInAuthRoute || isRoot)) {
       console.log('/(tabs)/home');
       router.push('/(tabs)/home');
     }
-  }, [isNavigationReady, authStatus, notInAuthRoute]);
+  }, [isNavigationReady, authStatus, notInAuthRoute, isRoot]);
 }

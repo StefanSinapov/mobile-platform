@@ -1,9 +1,7 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Tabs } from 'expo-router';
-import { useColorScheme } from 'react-native';
 
-import Colors from '@/constants/Colors';
-import { translate } from '@/core';
+import { translate, useTheme } from '@/core';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -23,7 +21,7 @@ type TabList = {
 }[];
 
 export default function TabsLayout() {
-  const colorScheme = useColorScheme();
+  const { theme } = useTheme();
 
   const tabs: TabList = [
     {
@@ -56,16 +54,15 @@ export default function TabsLayout() {
 
   return (
     <Tabs
-      initialRouteName="home"
+      // initialRouteName="home"
       screenOptions={{
         // TODO: defaultHeaderOptions
         // ...defaultHeaderOptions,
-        // tabBarStyle: {
-        //   backgroundColor: theme.colors.background,
-        //   borderTopColor: theme.colors.muted3,
-        //   borderTopWidth: StyleSheet.hairlineWidth,
-        // },
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarStyle: {
+          backgroundColor: theme.colors.background,
+          borderTopColor: theme.colors.border,
+        },
+        tabBarActiveTintColor: theme.colors.text,
       }}>
       {tabs.map(({ id, title, iconFilled, iconOutlined }) => (
         <Tabs.Screen

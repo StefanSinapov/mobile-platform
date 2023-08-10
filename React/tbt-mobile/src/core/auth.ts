@@ -1,4 +1,5 @@
-﻿import { Alert } from 'react-native';
+﻿import { router } from 'expo-router';
+import { Alert } from 'react-native';
 import { create } from 'zustand';
 
 import * as storage from '@/utils/storage';
@@ -64,6 +65,7 @@ const authStore = create<AuthState>(set => ({
       const tokens = await fakeLogin(credentials);
       await persistAuthTokens(tokens);
       set({ tokens, status: 'authenticated' });
+      router.replace('/home');
     } catch (error) {
       set({ status: 'unauthenticated' });
       throw error; // rethrow so caller can handle it

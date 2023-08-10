@@ -10,7 +10,7 @@ import en from '@/translations/en';
 import nl from '@/translations/nl';
 import * as storage from '@/utils/storage';
 
-const LOCALE_STORAGE_KEY = '@app/locale_v1';
+const LOCALE_STORAGE_KEY = '@app/locale/v1';
 
 export const resources = {
   en: {

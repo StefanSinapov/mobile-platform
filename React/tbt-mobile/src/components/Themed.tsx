@@ -6,12 +6,12 @@
 import { Link as DefaultLink, type LinkProps as DefaultLinkProps } from 'expo-router';
 import React, {
   Text as DefaultText,
-  useColorScheme,
   View as DefaultView,
   ScrollView as DefaultScrollView,
 } from 'react-native';
 
 import Colors from '@/constants/Colors';
+import { useTheme } from '@/core';
 
 type ThemeProps = {
   lightColor?: string;
@@ -27,13 +27,13 @@ export function useThemeColor(
   props: { light?: string; dark?: string },
   colorName: keyof typeof Colors.light & keyof typeof Colors.dark,
 ) {
-  const theme = useColorScheme() ?? 'light';
-  const colorFromProps = props[theme];
+  const { themeScheme } = useTheme();
+  const colorFromProps = props[themeScheme];
 
   if (colorFromProps) {
     return colorFromProps;
   } else {
-    return Colors[theme][colorName];
+    return Colors[themeScheme][colorName];
   }
 }
 

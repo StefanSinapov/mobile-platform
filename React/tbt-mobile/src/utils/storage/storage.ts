@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * Loads a string from storage.
@@ -79,4 +80,35 @@ export async function clear(): Promise<void> {
   try {
     await AsyncStorage.clear();
   } catch {}
+}
+
+export function useStorage<T extends string>(
+  key: string,
+): [T | null, (data: T) => Promise<T>, () => Promise<void>] {
+  const [storageItem, setStorageItem] = useState<T | null>(null);
+
+  const getStorageItem = useCallback(async () => {
+    const data = (await loadString(key)) as T;
+    console.log('getStorageItem', data);
+    setStorageItem(data);
+  }, [key]);
+
+  async function updateStorageItem(data: T) {
+    if (typeof data === 'string') {
+      await saveString(key, data);
+      setStorageItem(data);
+    }
+    return data;
+  }
+
+  async function clearStorageItem() {
+    await remove(key);
+    setStorageItem(null);
+  }
+
+  useEffect(() => {
+    getStorageItem();
+  }, [getStorageItem]);
+
+  return [storageItem, updateStorageItem, clearStorageItem];
 }

@@ -1,13 +1,12 @@
 ﻿import React from 'react';
+import { ActivityIndicator } from 'react-native';
 
-import { Text, View } from '@/components/Themed';
+import { View } from '@/components/Themed';
 
 export default function Root() {
   return (
-    <>
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    </>
+    <View style={{ flex: 1, justifyContent: 'center' }}>
+      <ActivityIndicator size="large" />
+    </View>
   );
 }
