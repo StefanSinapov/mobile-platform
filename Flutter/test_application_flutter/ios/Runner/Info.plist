@@ -53,5 +53,7 @@
 	<string>Explanation on why the camera access is needed.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Explanation on why the microphone access is needed.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Explanation on why the location data will be used.</string>
 </dict>
 </plist>

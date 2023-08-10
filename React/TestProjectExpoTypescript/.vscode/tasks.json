@@ -9,6 +9,15 @@
 			],
 			"label": "npm: start",
 			"detail": "expo start"
+		},
+		{
+			"type": "npm",
+			"script": "ios",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"label": "npm: ios",
+			"detail": "expo run:ios"
 		}
 	]
 }

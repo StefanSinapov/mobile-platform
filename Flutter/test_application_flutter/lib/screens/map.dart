@@ -40,7 +40,7 @@ class _MapPageState extends State<MapPage> {
             ],
           ),
           SizedBox(
-            height: 500.0,
+            height: 400.0,
             child: GoogleMap(
                 onMapCreated: _onMapCreated,
                 onLongPress: addMarker,

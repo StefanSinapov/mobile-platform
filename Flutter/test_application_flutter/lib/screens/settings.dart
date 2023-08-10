@@ -31,6 +31,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Text('Operation system: ${Platform.operatingSystem}'),
           Text('Device: $device'),
           Text('OS: $OS'),
+          const Text('Hot reload is working!'),
         ],
       ),
     );
