@@ -1,5 +1,5 @@
 ﻿import type { Theme as NavigationTheme } from '@react-navigation/native';
-import { ThemeProvider as NavigationThemeProvider, DefaultTheme } from '@react-navigation/native';
+import { ThemeProvider as NavigationThemeProvider } from '@react-navigation/native';
 import { ThemeProvider as RestyleThemeProvider } from '@shopify/restyle';
 import type { ReactNode } from 'react';
 import { createContext, useContext } from 'react';

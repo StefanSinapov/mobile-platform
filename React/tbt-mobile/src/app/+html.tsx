@@ -35,6 +35,7 @@ export default function Root({ children }: { children: React.ReactNode }) {
   );
 }
 
+// TODO: handle theming in initial load
 const responsiveBackground = `
 body {
   background-color: #fff;
