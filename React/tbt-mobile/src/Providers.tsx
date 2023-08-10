@@ -1,6 +1,6 @@
 ﻿import type { ReactNode } from 'react';
 
-import { ThemeProvider } from '@/core';
+import { ThemeProvider } from '@/ui';
 
 export default function Providers({ children }: { children: ReactNode }) {
   return (

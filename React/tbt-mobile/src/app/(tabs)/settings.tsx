@@ -2,8 +2,9 @@
 import { Button } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
-import { useI18n, useTheme } from '@/core';
+import { useI18n } from '@/core';
 import { useAuthStore } from '@/core/auth';
+import { useTheme } from '@/ui';
 
 export default function SettingsView() {
   const authStatus = useAuthStore(state => state.status);

@@ -1,7 +1,8 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Tabs } from 'expo-router';
 
-import { translate, useTheme } from '@/core';
+import { translate } from '@/core';
+import { useTheme } from '@/ui';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/

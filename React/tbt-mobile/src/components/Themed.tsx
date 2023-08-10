@@ -11,7 +11,7 @@ import React, {
 } from 'react-native';
 
 import Colors from '@/constants/Colors';
-import { useTheme } from '@/core';
+import { useTheme } from '@/ui';
 
 type ThemeProps = {
   lightColor?: string;
