@@ -2,7 +2,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Tabs } from 'expo-router';
 
 import { translate } from '@/core';
-import { useTheme } from '@/ui';
+import { useDefaultHeaderOptions, useTheme } from '@/ui';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -11,7 +11,7 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof MaterialIcons>['name'];
   color: string;
 }) {
-  return <MaterialIcons size={28} {...props} />;
+  return <MaterialIcons size={28} {...props} style={{ marginBottom: -3 }} />;
 }
 
 type TabList = {
@@ -23,7 +23,7 @@ type TabList = {
 
 export default function TabsLayout() {
   const { theme } = useTheme();
-
+  const defaultHeaderOptions = useDefaultHeaderOptions();
   const tabs: TabList = [
     {
       id: 'home',
@@ -55,10 +55,9 @@ export default function TabsLayout() {
 
   return (
     <Tabs
-      // initialRouteName="home"
+      initialRouteName="home"
       screenOptions={{
-        // TODO: defaultHeaderOptions
-        // ...defaultHeaderOptions,
+        ...defaultHeaderOptions,
         tabBarStyle: {
           backgroundColor: theme.colors.background,
           borderTopColor: theme.colors.border,
@@ -71,7 +70,6 @@ export default function TabsLayout() {
           name={id}
           options={{
             title,
-            // eslint-disable-next-line react/no-unstable-nested-components
             tabBarIcon: ({ focused, color }) => (
               <TabBarIcon name={focused ? iconFilled : iconOutlined} color={color} />
             ),

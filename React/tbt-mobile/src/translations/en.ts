@@ -11,6 +11,9 @@
   settings: {
     title: 'Settings',
   },
+  common: {
+    back: 'Back',
+  },
 };
 
 export default en;

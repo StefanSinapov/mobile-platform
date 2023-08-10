@@ -1,10 +1,12 @@
 ﻿import React from 'react';
 import { Button } from 'react-native';
 
-import { Text, View } from '@/components/Themed';
+import { View } from '@/components/Themed';
 import { useI18n } from '@/core';
 import { useAuthStore } from '@/core/auth';
-import { useTheme } from '@/ui';
+// import {  Text as RestyleText, useTheme } from '@/ui';
+import { useTheme, Text } from '@/ui';
+// import RestyleText from '@/ui/components/text';
 
 export default function SettingsView() {
   const authStatus = useAuthStore(state => state.status);
@@ -26,6 +28,15 @@ export default function SettingsView() {
       <Button title="Set theme mode to light" onPress={() => setThemeMode('light')} />
       <Button title="Set theme mode to dark" onPress={() => setThemeMode('dark')} />
       <Button title="Set theme mode to system" onPress={() => setThemeMode('system')} />
+      <Text>No variant</Text>
+      <Text variant="header">Inside box</Text>
+      <Text margin="s" color="error" fontFamily="Aria">
+        Inside box
+      </Text>
+
+      {/* <Box alignContent="center" flex={1} alignItems="center" height={100}>
+        <Text>Inside box</Text>
+      </Box> */}
     </View>
   );
 }

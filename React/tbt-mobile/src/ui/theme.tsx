@@ -29,10 +29,10 @@ const colors = {
 
 const lightTheme = createTheme({
   spacing: {
-    0: 0,
-    px: 1,
-    0.5: 2,
-    1: 4,
+    s: 8,
+    m: 16,
+    l: 24,
+    xl: 40,
   },
   borderRadii: {
     '2': 2,
@@ -51,6 +51,64 @@ const lightTheme = createTheme({
     error: colors.red,
     success: colors.green,
     primary: colors.limonGreen,
+  },
+  typography: {
+    fontFamily: 'Armin Grotesk',
+    text: {
+      xxs: {
+        fontSize: 10,
+        lineHeight: 16,
+      },
+      xs: {
+        fontSize: 12,
+        lineHeight: 16,
+      },
+      s: {
+        fontSize: 14,
+        lineHeight: 20,
+      },
+      m: {
+        fontSize: 16,
+        lineHeight: 24,
+      },
+      l: {
+        fontSize: 18,
+        lineHeight: 28,
+      },
+      xl: {
+        fontSize: 20,
+        lineHeight: 28,
+      },
+    },
+    weight: {
+      normal: 300,
+      regular: 400,
+      semiBold: 600,
+      ultraBold: 800,
+    },
+  },
+
+  textVariants: {
+    defaults: {
+      color: 'text',
+    },
+    header: {
+      fontFamily: 'ShopifySans-Bold',
+      fontWeight: 'bold',
+      fontSize: 34,
+      lineHeight: 42.5,
+    },
+    subheader: {
+      fontFamily: 'ShopifySans-SemiBold',
+      fontWeight: '600',
+      fontSize: 28,
+      lineHeight: 36,
+    },
+    body: {
+      fontFamily: 'ShopifySans',
+      fontSize: 16,
+      lineHeight: 24,
+    },
   },
 });
 

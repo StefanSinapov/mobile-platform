@@ -111,7 +111,7 @@ export async function initAuth() {
       Alert.alert(
         'Could not connect to server',
         'Please check your internet connection and try again.',
-      ); // TODO: i18n
+      );
     } else {
       console.error('> Unknown auth error', error);
       // Logout the user in case of unknown errors or if the access token is missing

@@ -1,25 +1,28 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { Link, Tabs, router } from 'expo-router';
-import type { ColorSchemeName } from 'react-native';
-import { Button, Pressable, StyleSheet, useColorScheme } from 'react-native';
+import { Button, Pressable, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
-import Colors from '@/constants/Colors';
 import { translate } from '@/core';
+import type { Theme } from '@/ui';
+import { useDefaultHeaderOptions, useTheme } from '@/ui';
 
 export default function TabOneScreen() {
-  const colorScheme = useColorScheme();
+  const { theme } = useTheme();
+  const screenOptions = useDefaultHeaderOptions();
+
   return (
     <View style={styles.container}>
       <Tabs.Screen
         options={{
+          ...screenOptions,
           title: translate('home.title'),
-          headerRight: () => newFunction(colorScheme),
+          headerRight: () => modalButton(theme),
         }}
       />
       <Text style={styles.title}>Home</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <View style={styles.separator} />
       <EditScreenInfo path="app/(tabs)/index.tsx" />
       <Button title="Modal" onPress={() => router.push('/modal')} />
     </View>
@@ -43,7 +46,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function newFunction(colorScheme: ColorSchemeName) {
+function modalButton(theme: Theme) {
   return (
     <Link href="/modal" asChild>
       <Pressable>
@@ -51,7 +54,7 @@ function newFunction(colorScheme: ColorSchemeName) {
           <MaterialIcons
             name="info"
             size={25}
-            color={Colors[colorScheme ?? 'light'].text}
+            color={theme.colors.text}
             style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
           />
         )}

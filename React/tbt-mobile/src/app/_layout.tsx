@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 
 import Providers from '@/Providers';
 import { useAuthStore } from '@/core/auth';
+import { useDefaultStackScreenOptions } from '@/ui';
 import { useAppReady, useRouterReady } from '@/utils/init';
 
 export {
@@ -49,9 +50,9 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  // const screenOptions = useDefaultStackScreenOptions(); TODO: implement
+  const screenOptions = useDefaultStackScreenOptions();
   return (
-    <Stack screenOptions={{ headerShown: false }} initialRouteName="(tabs)">
+    <Stack screenOptions={{ ...screenOptions, headerShown: false }} initialRouteName="(tabs)">
       {/* <Stack.Screen name="index" /> */}
       <Stack.Screen name="(tabs)" />
       {/* <Stack.Screen name="(auth)" /> */}
