@@ -1,0 +1,35 @@
+﻿<ActionBar title="This is Home"></ActionBar>
+
+<button text="Tap me!" (tap)="onClick($event)"></button>
+<!-- Add this 👇 -->
+<ListView height="100%"
+    separatorColor="transparent"
+    [items]="flicks">
+    <ng-template let-item="item">
+        <GridLayout height="280"
+            rows="*, auto, auto"
+            columns="*"
+            class="bg-secondary"
+            borderRadius="10"
+            margin="5 10"
+            padding="0"
+            (click)="onClick($event)">
+            <Image row="0"
+                margin="0"
+                stretch="aspectFill"
+                [src]="item.image"></Image>
+            <Label row="1"
+                margin="10 10 0 10"
+                fontWeight="700"
+                class="text-primary"
+                fontSize="18"
+                [text]="item.title"></Label>
+            <Label row="2"
+                margin="0 10 10 10"
+                class="text-secondary"
+                fontSize="14"
+                textWrap="true"
+                [text]="item.description"></Label>
+        </GridLayout>
+    </ng-template>
+</ListView>

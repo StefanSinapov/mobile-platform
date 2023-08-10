@@ -31,73 +31,77 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: [
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text('Click and hold to add pin'),
-            ],
-          ),
-          SizedBox(
-            height: 400.0,
-            child: GoogleMap(
-                onMapCreated: _onMapCreated,
-                onLongPress: addMarker,
-                myLocationEnabled: true,
-                myLocationButtonEnabled: false,
-                onCameraMove: (position) => {
-                      setState(() {
-                        _cameraPosition = position.target;
-                      })
-                    },
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(42.68346616830684, 23.35478659057842),
-                  zoom: 10,
-                ),
-                markers: _markers.toSet()),
-          ),
-          const SizedBox(height: 10),
-          Text(
-              'Camera position: ${_cameraPosition == null ? 'null' : latLngToString(_cameraPosition!)}'),
-          Text(
-              'Current position: ${_myPosition == null ? 'null' : latLngToString(_myPosition!)}'),
-          ElevatedButton(
-            onPressed: goToOffice,
-            child: const Text('Go to office'),
-          ),
-          const SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: goToCurrentPosition,
-            child: const Text('My location'),
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text('Click and hold to add pin'),
+              ],
+            ),
+            SizedBox(
+              height: 500.0,
+              child: GoogleMap(
+                  onMapCreated: _onMapCreated,
+                  onLongPress: _addMarker,
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: false,
+                  onCameraMove: _onCameraMove,
+                  initialCameraPosition: const CameraPosition(
+                    target: LatLng(42.68346616830684, 23.35478659057842),
+                    zoom: 10,
+                  ),
+                  markers: _markers.toSet()),
+            ),
+            const SizedBox(height: 10),
+            Text(
+                'Camera position: ${_cameraPosition == null ? 'null' : _latLngToString(_cameraPosition!)}'),
+            Text(
+                'Current position: ${_myPosition == null ? 'null' : _latLngToString(_myPosition!)}'),
+            ElevatedButton(
+              onPressed: _goToOffice,
+              child: const Text('Go to office'),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: _goToCurrentPosition,
+              child: const Text('My location'),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  void goToOffice() {
+  void _onCameraMove(position) => {
+        setState(() {
+          _cameraPosition = position.target;
+        })
+      };
+
+  void _goToOffice() {
     mapController.animateCamera(CameraUpdate.newLatLng(_office.position));
   }
 
-  String latLngToString(LatLng argument) {
+  String _latLngToString(LatLng argument) {
     return '${argument.latitude.toStringAsPrecision(7)}, ${argument.longitude.toStringAsPrecision(7)}';
   }
 
-  void addMarker(LatLng argument) {
+  void _addMarker(LatLng argument) {
     setState(() {
       _markers.add(Marker(
         markerId: MarkerId(argument.toString()),
         position: argument,
         infoWindow: InfoWindow(
             title: 'Marker ${_markers.length}',
-            snippet: latLngToString(argument)),
+            snippet: _latLngToString(argument)),
         draggable: true,
       ));
     });
   }
 
-  Future<void> goToCurrentPosition() async {
+  Future<void> _goToCurrentPosition() async {
     try {
       var position = await _determinePosition();
       setState(() {

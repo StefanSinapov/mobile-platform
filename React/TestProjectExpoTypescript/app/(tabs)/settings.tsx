@@ -1,11 +1,12 @@
-﻿import { Appearance, Button, StyleSheet, Switch } from 'react-native';
-import { useState } from 'react';
+﻿import { Button, GestureResponderEvent } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
 import * as Device from 'expo-device';
 
 export default function CameraScreen() {
-    const [darkMode, setDarkMode] = useState(false);
+    function onButtonPress(event: GestureResponderEvent): void {
+        console.log('clicked', event.nativeEvent.target);
+    }
 
     return (
         <View
@@ -22,6 +23,8 @@ export default function CameraScreen() {
             </Text>
             <Text>Device type: {Device.deviceType}</Text>
             <Text>OS build ID: {Device.osBuildId}</Text>
+            <Text>How load</Text>
+            <Button onPress={onButtonPress} title="Click me" />
         </View>
     );
 }
