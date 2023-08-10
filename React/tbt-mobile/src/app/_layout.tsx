@@ -68,16 +68,15 @@ function useRouteProtection() {
   const isNavigationReady = useRouterReady();
   const isRoot = pathName === '/';
   useEffect(() => {
-    console.info('runEffect');
     if (!isNavigationReady) {
       return;
     }
 
     if (authStatus === 'unauthenticated' && notInAuthRoute) {
-      console.log('/(auth)/landing');
+      console.debug('/(auth)/landing');
       router.replace('/(auth)/landing');
     } else if (authStatus === 'authenticated' && (!notInAuthRoute || isRoot)) {
-      console.log('/(tabs)/home');
+      console.debug('/(tabs)/home');
       router.push('/(tabs)/home');
     }
   }, [isNavigationReady, authStatus, notInAuthRoute, isRoot]);

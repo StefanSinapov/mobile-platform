@@ -60,7 +60,7 @@ const authStore = create<AuthState>(set => ({
   login: async credentials => {
     set({ status: 'logging-in' });
 
-    console.log('logging-in');
+    console.debug('logging-in');
     try {
       const tokens = await fakeLogin(credentials);
       await persistAuthTokens(tokens);
@@ -76,7 +76,7 @@ const authStore = create<AuthState>(set => ({
     try {
       await fakeLogout();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
 
     // TODO: clear API client cache
@@ -106,14 +106,14 @@ export async function initAuth() {
     if (isAuthError(error)) {
       // Ignore auth errors here since they are handled in the GraphQL client
       // where the user will be logged out automatically
-      console.log('> Auth error detected during auth check', error);
+      console.error('> Auth error detected during auth check', error);
     } else if (error?.networkError) {
       Alert.alert(
         'Could not connect to server',
         'Please check your internet connection and try again.',
       ); // TODO: i18n
     } else {
-      console.log('> Unknown auth error', error);
+      console.error('> Unknown auth error', error);
       // Logout the user in case of unknown errors or if the access token is missing
       authStore.getState().logout();
     }

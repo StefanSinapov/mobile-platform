@@ -26,7 +26,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const systemColorMode = useColorScheme();
   const [persistedThemeMode, setThemeMode] = storage.useStorage<ThemeMode>(THEME_STORAGE_KEY);
 
-  console.log(persistedThemeMode);
   const themeMode = persistedThemeMode ?? 'system';
   let themeScheme: ThemeScheme;
 

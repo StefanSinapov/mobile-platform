@@ -89,7 +89,6 @@ export function useStorage<T extends string>(
 
   const getStorageItem = useCallback(async () => {
     const data = (await loadString(key)) as T;
-    console.log('getStorageItem', data);
     setStorageItem(data);
   }, [key]);
 
