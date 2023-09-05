@@ -1,6 +1,7 @@
 ﻿import type { Theme as NavigationTheme } from '@react-navigation/native';
 import { ThemeProvider as NavigationThemeProvider } from '@react-navigation/native';
 import { ThemeProvider as RestyleThemeProvider, createTheme } from '@shopify/restyle';
+import { StatusBar } from 'expo-status-bar';
 import type { ReactNode } from 'react';
 import { createContext, useContext } from 'react';
 import { useColorScheme } from 'react-native';
@@ -29,8 +30,9 @@ const colors = {
 
 const lightTheme = createTheme({
   spacing: {
+    xs: 4,
     s: 8,
-    m: 16,
+    m: 12,
     l: 24,
     xl: 40,
   },
@@ -44,75 +46,101 @@ const lightTheme = createTheme({
   zIndices: {
     '0': 0,
   },
+  breakpoints: {
+    phone: 0,
+    tablet: 768,
+  },
   colors: {
     background: colors.white,
+    shadowBackground: colors.white,
     text: colors.darkGunmetal,
     border: colors.japaneseIndigoMedium,
     error: colors.red,
     success: colors.green,
     primary: colors.limonGreen,
+    black: colors.black,
+    shadow: colors.black,
   },
   typography: {
-    fontFamily: 'Armin Grotesk',
-    text: {
-      xxs: {
-        fontSize: 10,
-        lineHeight: 16,
-      },
-      xs: {
-        fontSize: 12,
-        lineHeight: 16,
-      },
-      s: {
-        fontSize: 14,
-        lineHeight: 20,
-      },
-      m: {
-        fontSize: 16,
-        lineHeight: 24,
-      },
-      l: {
-        fontSize: 18,
-        lineHeight: 28,
-      },
-      xl: {
-        fontSize: 20,
-        lineHeight: 28,
-      },
-    },
-    weight: {
+    // fontFamily: 'Armin Grotesk', // TODO: Add font
+    fontWeight: {
       normal: 300,
       regular: 400,
       semiBold: 600,
       ultraBold: 800,
     },
   },
-
+  shadowVariants: {
+    defaults: {},
+    small: {
+      shadowColor: 'shadow',
+      backgroundColor: 'shadowBackground',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.2,
+      shadowRadius: 1.41,
+      elevation: 2,
+    },
+    normal: {
+      shadowColor: 'shadow',
+      backgroundColor: 'shadowBackground',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
+    medium: {
+      shadowColor: 'shadow',
+      backgroundColor: 'shadowBackground',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 4.65,
+      elevation: 8,
+    },
+    large: {
+      shadowColor: 'shadow',
+      backgroundColor: 'shadowBackground',
+      shadowOffset: { width: 0, height: 6 },
+      shadowOpacity: 0.35,
+      shadowRadius: 6.68,
+      elevation: 11,
+    },
+  },
   textVariants: {
     defaults: {
       color: 'text',
+      // fontFamily: 'Armin Grotesk',
     },
-    header: {
-      fontFamily: 'ShopifySans-Bold',
-      fontWeight: 'bold',
-      fontSize: 34,
-      lineHeight: 42.5,
+    xxs: {
+      fontSize: 10,
+      lineHeight: 16,
     },
-    subheader: {
-      fontFamily: 'ShopifySans-SemiBold',
-      fontWeight: '600',
-      fontSize: 28,
-      lineHeight: 36,
+    xs: {
+      fontSize: 12,
+      lineHeight: 16,
     },
-    body: {
-      fontFamily: 'ShopifySans',
+    s: {
+      fontSize: 14,
+      lineHeight: 20,
+    },
+    m: {
       fontSize: 16,
       lineHeight: 24,
+    },
+    l: {
+      fontSize: 18,
+      lineHeight: 28,
+    },
+    xl: {
+      fontSize: 20,
+      lineHeight: 28,
     },
   },
 });
 
 export type Theme = typeof lightTheme;
+export type TextVariants = Exclude<keyof Theme['textVariants'], 'defaults'>;
+export type FontWeight = keyof Theme['typography']['fontWeight'];
+export type ShadowVariants = Exclude<keyof Theme['shadowVariants'], 'defaults'>;
 
 const darkTheme: Theme = {
   ...lightTheme,
@@ -121,6 +149,9 @@ const darkTheme: Theme = {
     background: colors.black,
     text: colors.white,
     border: colors.japaneseIndigoMedium,
+    black: colors.white,
+    shadowBackground: colors.dimGrey,
+    shadow: colors.dimGrey,
   },
 };
 
@@ -170,7 +201,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   return (
     <ThemeContext.Provider value={{ themeMode, themeScheme, theme, setThemeMode }}>
       <RestyleThemeProvider theme={theme}>
-        <NavigationThemeProvider value={navigationTheme}>{children}</NavigationThemeProvider>
+        <NavigationThemeProvider value={navigationTheme}>
+          {children}
+          <StatusBar style={navigationTheme.dark ? 'light' : 'dark'} />
+        </NavigationThemeProvider>
       </RestyleThemeProvider>
     </ThemeContext.Provider>
   );

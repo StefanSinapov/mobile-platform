@@ -14,7 +14,7 @@ export function useDefaultHeaderOptions() {
     headerTintColor: theme.colors.text,
 
     headerTitleStyle: {
-      fontSize: theme.typography.text.xl.fontSize,
+      fontSize: theme.textVariants.xl.fontSize,
     },
   };
 
@@ -28,10 +28,12 @@ export function useDefaultStackScreenOptions() {
   const screenOptions: NativeStackNavigationOptions = {
     ...defaultHeaderOptions,
     headerBackTitleStyle: {
-      fontSize: theme.typography.text.xl.fontSize,
+      fontSize: theme.textVariants.xl.fontSize,
     },
     headerBackTitle: translate('common.back'),
   };
 
   return screenOptions;
 }
+
+export const getKeys = <T extends object>(object: T) => Object.keys(object) as (keyof T)[];

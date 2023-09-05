@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
-import { Platform } from 'react-native';
+import { Platform, ScrollView } from 'react-native';
 
-import { Text, ScrollView } from '@/components/Themed';
+import { Text } from '@/ui';
 
 export default function RegisterView() {
   return (

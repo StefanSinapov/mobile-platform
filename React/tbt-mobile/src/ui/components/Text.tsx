@@ -1,27 +1,21 @@
-﻿// import type {
-//   ColorProps,
-//   OpacityProps,
-//   SpacingProps,
-//   TextShadowProps,
-//   TypographyProps,
-//   VariantProps,
-//   VisibleProps,
-// } from '@shopify/restyle';
-import { createBox, createText } from '@shopify/restyle';
-// import type { ComponentProps } from 'react';
+﻿import type { TextProps } from '@shopify/restyle';
+import { createRestyleComponent, createRestyleFunction, createText } from '@shopify/restyle';
 
-import type { Theme } from '../theme';
+import type { FontWeight, Theme } from '../theme';
 
-// type RestyleProps = ColorProps<Theme> &
-//   OpacityProps<Theme> &
-//   VisibleProps<Theme> &
-//   TypographyProps<Theme> &
-//   SpacingProps<Theme> &
-//   TextShadowProps<Theme> &
-//   VariantProps<Theme, 'textVariants'>;
+const fontWeightFunction = createRestyleFunction({
+  property: 'fontWeight',
+  transform: ({ theme, value }: { theme: Theme; value: FontWeight }) => {
+    return theme.typography.fontWeight[value];
+  },
+});
 
-// type Props = ComponentProps<typeof Text> & RestyleProps;
+const RestyleText = createText<Theme>();
+type Props = Omit<TextProps<Theme>, 'fontWeight'> & {
+  children: React.ReactNode;
+  fontWeight?: FontWeight;
+};
 
-export const Text = createText<Theme>();
+const Text = createRestyleComponent<Props, Theme>([fontWeightFunction], RestyleText);
 
 export default Text;

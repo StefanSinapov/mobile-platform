@@ -1,3 +1,4 @@
 ﻿import Text from './Text';
+import RestyleView from './View';
 
-export { Text };
+export { Text, RestyleView as View };

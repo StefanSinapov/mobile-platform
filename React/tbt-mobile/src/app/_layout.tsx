@@ -11,10 +11,13 @@ export {
   ErrorBoundary,
 } from 'expo-router';
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
+// export const unstable_settings = {
+//   // Ensure that reloading on `/modal` keeps a back button present.
+//   initialRouteName: '(tabs)',
+//   playground: {
+//     initialRouteName: 'index',
+//   },
+// };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -44,7 +47,6 @@ export default function RootLayout() {
   return (
     <Providers>
       <RootLayoutNav />
-      {/* <StatusBar style="auto" /> */}
     </Providers>
   );
 }
@@ -52,10 +54,8 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const screenOptions = useDefaultStackScreenOptions();
   return (
-    <Stack screenOptions={{ ...screenOptions, headerShown: false }} initialRouteName="(tabs)">
-      {/* <Stack.Screen name="index" /> */}
+    <Stack screenOptions={{ ...screenOptions, headerShown: false }}>
       <Stack.Screen name="(tabs)" />
-      {/* <Stack.Screen name="(auth)" /> */}
       <Stack.Screen name="modal" options={{ presentation: 'modal', headerShown: true }} />
     </Stack>
   );
