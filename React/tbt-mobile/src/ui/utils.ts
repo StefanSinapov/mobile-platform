@@ -10,6 +10,7 @@ export function useDefaultHeaderOptions() {
   const headerOptions: Partial<HeaderOptions> = {
     headerStyle: {
       backgroundColor: theme.colors.background,
+      borderColor: theme.colors.border,
     },
     headerTintColor: theme.colors.text,
 

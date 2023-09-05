@@ -4,15 +4,18 @@ import React from 'react';
 import { Pressable } from 'react-native';
 
 import type { Theme } from '@/ui';
-import { Text, View, useTheme } from '@/ui';
+import { Text, View, useDefaultStackScreenOptions, useTheme } from '@/ui';
 
 export default function PlaygroundScreen() {
   const { theme } = useTheme();
+
+  const screenOptions = useDefaultStackScreenOptions();
 
   return (
     <View padding="m" flex={1}>
       <Stack.Screen
         options={{
+          ...screenOptions,
           title: 'Playground',
           headerLeft: () => CloseButton(theme),
         }}

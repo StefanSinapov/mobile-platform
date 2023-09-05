@@ -4,10 +4,11 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 
 import type { ShadowVariants, TextVariants, Theme } from '@/ui';
-import { Text, View, getKeys, useTheme } from '@/ui';
+import { Text, View, getKeys, useDefaultStackScreenOptions, useTheme } from '@/ui';
 
 export default function PlaygroundScreen() {
   const { theme } = useTheme();
+  const screenOptions = useDefaultStackScreenOptions();
 
   const colors = getKeys(theme.colors) as (keyof Theme['colors'])[];
   const colorComponents = colors.map(color => <ColorBlock key={color} color={color} />);
@@ -46,7 +47,7 @@ export default function PlaygroundScreen() {
   return (
     <ScrollView>
       <View padding="m">
-        <Stack.Screen options={{ title: 'Design system', headerBackTitleVisible: false }} />
+        <Stack.Screen options={{ ...screenOptions, title: 'Design system' }} />
         <Title title="Colors" />
         <View flexDirection="row" flexWrap="wrap" paddingHorizontal="s" marginBottom="s">
           {colorComponents}

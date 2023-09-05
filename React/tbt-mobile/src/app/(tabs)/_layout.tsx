@@ -60,7 +60,7 @@ export default function TabsLayout() {
         ...defaultHeaderOptions,
         tabBarStyle: {
           backgroundColor: theme.colors.background,
-          borderTopColor: theme.colors.border,
+          borderColor: theme.colors.border,
         },
         tabBarActiveTintColor: theme.colors.text,
       }}>
