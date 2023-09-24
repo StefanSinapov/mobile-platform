@@ -101,7 +101,7 @@
     "metro-config": "0.75.1",
     "metro-react-native-babel-preset": "0.75.1",
     "metro-source-map": "0.75.1",
-    "mocha": "6",
+    "mocha": "10",
     "patch-package": "6.4.7",
     "postinstall-prepare": "1.0.1",
     "prettier": "2.8.8",
