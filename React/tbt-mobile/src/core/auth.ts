@@ -1,7 +1,8 @@
-﻿import { Alert } from 'react-native';
+﻿import { router } from 'expo-router';
+import { Alert } from 'react-native';
 import { create } from 'zustand';
-import * as storage from '@/utils/storage';
 
+import * as storage from '@/utils/storage';
 
 const TOKENS_STORAGE_KEY = '@app/access-token/v1';
 
@@ -59,11 +60,12 @@ const authStore = create<AuthState>(set => ({
   login: async credentials => {
     set({ status: 'logging-in' });
 
-    console.log('logging-in');
+    console.debug('logging-in');
     try {
       const tokens = await fakeLogin(credentials);
       await persistAuthTokens(tokens);
       set({ tokens, status: 'authenticated' });
+      router.replace('/home');
     } catch (error) {
       set({ status: 'unauthenticated' });
       throw error; // rethrow so caller can handle it
@@ -74,7 +76,7 @@ const authStore = create<AuthState>(set => ({
     try {
       await fakeLogout();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
 
     // TODO: clear API client cache
@@ -88,7 +90,7 @@ export async function initAuth() {
   authStore.setState({ status: 'determining' });
 
   try {
-    const accessToken = await storage.load(TOKENS_STORAGE_KEY) as AuthTokens;
+    const accessToken = (await storage.load(TOKENS_STORAGE_KEY)) as AuthTokens;
 
     if (!accessToken) {
       throw Error('No access token!');
@@ -104,14 +106,14 @@ export async function initAuth() {
     if (isAuthError(error)) {
       // Ignore auth errors here since they are handled in the GraphQL client
       // where the user will be logged out automatically
-      console.log('> Auth error detected during auth check', error);
+      console.error('> Auth error detected during auth check', error);
     } else if (error?.networkError) {
       Alert.alert(
         'Could not connect to server',
-        'Please check your internet connection and try again.'
-      ); // TODO: i18n
+        'Please check your internet connection and try again.',
+      );
     } else {
-      console.log('> Unknown auth error', error);
+      console.error('> Unknown auth error', error);
       // Logout the user in case of unknown errors or if the access token is missing
       authStore.getState().logout();
     }
@@ -126,14 +128,13 @@ async function persistAuthTokens(tokens: AuthTokens) {
   return await storage.save(TOKENS_STORAGE_KEY, tokens);
 }
 
-
 // Mock login functions --------------------------------------------------------
 
 function fakeLogin(
-  _credentials: LoginCredentials
+  _credentials: LoginCredentials,
 ): Promise<{ accessToken: string; refreshToken: string }> {
   return new Promise(resolve =>
-    setTimeout(() => resolve({ accessToken: '1234', refreshToken: '1234' }), 1000)
+    setTimeout(() => resolve({ accessToken: '1234', refreshToken: '1234' }), 1000),
   );
 }
 
@@ -142,10 +143,10 @@ function fakeLogout(): Promise<{ ok: boolean }> {
 }
 
 function fakeSignup(
-  _credentials: RegisterCredentials
+  _credentials: RegisterCredentials,
 ): Promise<{ accessToken: string; refreshToken: string }> {
   return new Promise(resolve =>
-    setTimeout(() => resolve({ accessToken: '1234', refreshToken: '1234' }), 1000)
+    setTimeout(() => resolve({ accessToken: '1234', refreshToken: '1234' }), 1000),
   );
 }
 
@@ -156,4 +157,3 @@ function fakeCheckAuth() {
 function fakeIsAuthError(error: any) {
   return [401, 403].includes(error?.errorCode);
 }
-

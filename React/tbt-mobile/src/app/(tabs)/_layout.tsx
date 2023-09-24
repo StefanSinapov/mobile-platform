@@ -1,8 +1,8 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Tabs } from 'expo-router';
-import { useColorScheme } from 'react-native';
 
-import Colors from '@/constants/Colors';
+import { translate } from '@/core';
+import { useDefaultHeaderOptions, useTheme } from '@/ui';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -11,7 +11,7 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof MaterialIcons>['name'];
   color: string;
 }) {
-  return <MaterialIcons size={28} {...props} />;
+  return <MaterialIcons size={28} {...props} style={{ marginBottom: -3 }} />;
 }
 
 type TabList = {
@@ -22,32 +22,32 @@ type TabList = {
 }[];
 
 export default function TabsLayout() {
-  const colorScheme = useColorScheme();
-
+  const { theme } = useTheme();
+  const defaultHeaderOptions = useDefaultHeaderOptions();
   const tabs: TabList = [
     {
       id: 'home',
-      title: 'Home',
-      iconFilled: 'home-filled',
+      title: translate('home.title'),
+      iconFilled: 'home',
       iconOutlined: 'home',
     },
     {
       id: 'search',
-      title: 'Search',
+      title: translate('search.title'),
       iconFilled: 'search',
       iconOutlined: 'search',
     },
 
     {
       id: 'profile',
-      title: 'Profile',
+      title: translate('profile.title'),
       iconFilled: 'person',
       iconOutlined: 'person',
     },
 
     {
       id: 'settings',
-      title: 'Settings',
+      title: translate('settings.title'),
       iconFilled: 'settings',
       iconOutlined: 'settings',
     },
@@ -57,13 +57,12 @@ export default function TabsLayout() {
     <Tabs
       initialRouteName="home"
       screenOptions={{
-        // ...defaultHeaderOptions,
-        // tabBarStyle: {
-        //   backgroundColor: theme.colors.background,
-        //   borderTopColor: theme.colors.muted3,
-        //   borderTopWidth: StyleSheet.hairlineWidth,
-        // },
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        ...defaultHeaderOptions,
+        tabBarStyle: {
+          backgroundColor: theme.colors.background,
+          borderColor: theme.colors.border,
+        },
+        tabBarActiveTintColor: theme.colors.text,
       }}>
       {tabs.map(({ id, title, iconFilled, iconOutlined }) => (
         <Tabs.Screen
@@ -71,7 +70,6 @@ export default function TabsLayout() {
           name={id}
           options={{
             title,
-            // eslint-disable-next-line react/no-unstable-nested-components
             tabBarIcon: ({ focused, color }) => (
               <TabBarIcon name={focused ? iconFilled : iconOutlined} color={color} />
             ),

@@ -1,10 +1,9 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { SplashScreen, Stack, router, useSegments } from 'expo-router';
+import { SplashScreen, Stack, router, useSegments, usePathname } from 'expo-router';
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
 
 import Providers from '@/Providers';
 import { useAuthStore } from '@/core/auth';
+import { useDefaultStackScreenOptions } from '@/ui';
 import { useAppReady, useRouterReady } from '@/utils/init';
 
 export {
@@ -12,10 +11,13 @@ export {
   ErrorBoundary,
 } from 'expo-router';
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
+// export const unstable_settings = {
+//   // Ensure that reloading on `/modal` keeps a back button present.
+//   initialRouteName: '(tabs)',
+//   playground: {
+//     initialRouteName: 'index',
+//   },
+// };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -32,7 +34,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      setTimeout(() => SplashScreen.hideAsync(), 500);
+      setTimeout(() => SplashScreen.hideAsync(), 300);
     }
   }, [loaded]);
 
@@ -45,42 +47,38 @@ export default function RootLayout() {
   return (
     <Providers>
       <RootLayoutNav />
-      {/* <StatusBar style="auto" /> */}
     </Providers>
   );
 }
 
 function RootLayoutNav() {
-  // const screenOptions = useDefaultStackScreenOptions();
-  const colorScheme = useColorScheme();
+  const screenOptions = useDefaultStackScreenOptions();
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }} initialRouteName="(tabs)/home">
-        {/* <Stack.Screen name="index" /> */}
-        <Stack.Screen name="(tabs)" />
-        {/* <Stack.Screen name="(auth)" /> */}
-        <Stack.Screen name="modal" options={{ presentation: 'modal', headerShown: true }} />
-      </Stack>
-    </ThemeProvider>
+    <Stack screenOptions={{ ...screenOptions, headerShown: false }}>
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="modal" options={{ presentation: 'modal', headerShown: true }} />
+    </Stack>
   );
 }
 
 function useRouteProtection() {
+  const pathName = usePathname();
   const segments = useSegments();
   const authStatus = useAuthStore(s => s.status);
   const notInAuthRoute = segments[0] !== '(auth)';
   const isNavigationReady = useRouterReady();
+  const isRoot = pathName === '/';
   useEffect(() => {
     if (!isNavigationReady) {
       return;
     }
 
     if (authStatus === 'unauthenticated' && notInAuthRoute) {
-      console.log('/(auth)/landing');
+      console.debug('/(auth)/landing');
       router.replace('/(auth)/landing');
-    } else if (authStatus === 'authenticated') {
-      console.log('/(tabs)/home');
+    } else if (authStatus === 'authenticated' && (!notInAuthRoute || isRoot)) {
+      console.debug('/(tabs)/home');
       router.push('/(tabs)/home');
     }
-  }, [isNavigationReady, authStatus, notInAuthRoute]);
+  }, [isNavigationReady, authStatus, notInAuthRoute, isRoot]);
 }
